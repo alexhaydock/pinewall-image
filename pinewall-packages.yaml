@@ -25,6 +25,7 @@ contents:
     - dropbear-openrc
     - ethtool
     - htop
+    - ifupdown-ng-ppp
     - ifupdown-ng-wireguard
     - iperf3
     - kea
@@ -36,6 +37,7 @@ contents:
     - nftables-openrc
     - nload
     - openssl
+    - ppp-pppoe
     - prometheus-node-exporter
     - prometheus-node-exporter-openrc
     - prometheus-unbound-exporter
