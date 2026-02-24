@@ -31,7 +31,7 @@ contents:
     - iperf3
     - kea
     - linux-firmware-none
-    - linux-virt
+    - linux-lts  # I'd like to use linux-virt for minimalism, but it doesn't ship PPPoE kernel modules :(
     - logrotate
     - nano
     - nftables
