@@ -13,6 +13,7 @@ contents:
     # Pinewall main workload packages
     - alpine-base
     - bird
+    - bird-openrc
     - ca-certificates
     - chrony
     - chrony-openrc
