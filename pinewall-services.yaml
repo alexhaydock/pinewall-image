@@ -79,6 +79,10 @@ paths:
     type: symlink
     source: /etc/init.d/acpid
     permissions: 0o755
+  - path: /etc/runlevels/default/bird
+    type: symlink
+    source: /etc/init.d/bird
+    permissions: 0o755
   - path: /etc/runlevels/default/chronyd
     type: symlink
     source: /etc/init.d/chronyd
