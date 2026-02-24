@@ -12,6 +12,7 @@ contents:
     - pinewall-config
     # Pinewall main workload packages
     - alpine-base
+    - bird
     - ca-certificates
     - chrony
     - chrony-openrc
