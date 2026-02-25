@@ -21,6 +21,8 @@ accounts:
       gid: 508
     - groupname: unbound
       gid: 509
+    - groupname: bird
+      gid: 510
   users:  # copied from /etc/passwd
     - username: iperf
       uid: 501
@@ -48,4 +50,7 @@ accounts:
       shell: /sbin/nologin
     - username: unbound
       uid: 509
+      shell: /sbin/nologin
+    - username: bird
+      uid: 510
       shell: /sbin/nologin
