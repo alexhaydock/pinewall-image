@@ -2,8 +2,8 @@
 include: pinewall-packages.yaml  # we can only use one include so take note this is a chain of includes
 contents:
   repositories:
-    - http://dl-cdn.alpinelinux.org/alpine/v3.23/main
-    - http://dl-cdn.alpinelinux.org/alpine/v3.23/community
+    - http://dl-cdn.alpinelinux.org/alpine/v3.24/main
+    - http://dl-cdn.alpinelinux.org/alpine/v3.24/community
     - http://dl-cdn.alpinelinux.org/alpine/edge/testing  # only for prometheus-unbound-exporter
   keyring:
     - ../config/melange.rsa.pub  # import keyring for config package
