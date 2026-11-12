@@ -7,9 +7,8 @@ contents:
     # Kernel and null firmware package
     - linux-firmware-none
     - linux-lts  # I'd like to use linux-virt for minimalism, but it doesn't ship PPPoE kernel modules :(
-    # Pinewall config package
-    # See: https://github.com/alexhaydock/pinewall-config
-    - pinewall-config
+    # Pinewall EFI config overlay package
+    - pinewall-init
     # Pinewall main workload packages
     - bird
     - bird-openrc

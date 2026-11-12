@@ -4,10 +4,7 @@ contents:
   repositories:
     - http://dl-cdn.alpinelinux.org/alpine/v3.24/main
     - http://dl-cdn.alpinelinux.org/alpine/v3.24/community
-    - http://dl-cdn.alpinelinux.org/alpine/edge/testing  # only for prometheus-unbound-exporter
-    - https://alexhaydock.github.io/pinewall-config/packages  # bring in custom pinewall-config package
+    - http://dl-cdn.alpinelinux.org/alpine/edge/testing     # only for prometheus-unbound-exporter
+    - https://alexhaydock.github.io/pinewall-init/packages  # for pinewall-init
   keyring:
-    # import keyring for custom pinewall-config package
-    - https://raw.githubusercontent.com/alexhaydock/pinewall-config/refs/heads/main/melange.rsa.pub
-archs:
-  - amd64
+    - https://raw.githubusercontent.com/alexhaydock/pinewall-init/refs/heads/main/melange.rsa.pub
