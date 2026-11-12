@@ -65,6 +65,6 @@ jobs:
         with:
           tag_name: ${{ env.DATE }}
           name: Pinewall ${{ env.DATE }}
-          files:
-            - output/${BUILDNAME}_uki.efi
-            - output/${BUILDNAME}_vars.json
+          files: |
+            output/${BUILDNAME}_uki.efi
+            output/${BUILDNAME}_vars.json
