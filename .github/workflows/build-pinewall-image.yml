@@ -18,10 +18,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Configure build name
+      - name: Configure build name based on current date
         run: |
-          echo "DATE=$(date +%Y%m%d-%H%M)" >> "$GITHUB_ENV"
-          echo "BUILDNAME=pinewall-${DATE}" >> "$GITHUB_ENV"
+          echo "BUILDNAME=pinewall-$(date +%Y%m%d-%H%M)" >> "$GITHUB_ENV"
 
       - name: Fetch sops
         run: |
@@ -66,5 +65,5 @@ jobs:
           tag_name: ${{ env.DATE }}
           name: Pinewall ${{ env.DATE }}
           files: |
-            output/${BUILDNAME}_uki.efi
-            output/${BUILDNAME}_vars.json
+            output/${env.BUILDNAME}_uki.efi
+            output/${env.BUILDNAME}_vars.json
