@@ -41,21 +41,21 @@ jobs:
 
       - name: Build initramfs
         run: |
-          podman run --privileged --rm -it -v "$(pwd):/opt" --workdir /opt cgr.dev/chainguard/wolfi-base \
+          podman run --privileged --rm -it -e BUILDNAME -v "$(pwd):/opt" --workdir /opt cgr.dev/chainguard/wolfi-base \
           sh -c \
           'apk --no-cache add apko cpio systemd-ukify zstd && \
           sh /opt/scripts/initramfs.sh'
 
       - name: Build UKI
         run: |
-          podman run --privileged --rm -it -v "$(pwd):/opt" --workdir /opt docker.io/library/alpine \
+          podman run --privileged --rm -it -e BUILDNAME -v "$(pwd):/opt" --workdir /opt docker.io/library/alpine \
           sh -c \
           'apk --no-cache add apko sbsigntool ukify && \
           sh /opt/scripts/uki.sh'
 
       - name: Build blank vars store
         run: |
-          podman run --rm -it -v "$(pwd):/opt" --workdir /opt registry.fedoraproject.org/fedora \
+          podman run --rm -it -e BUILDNAME -v "$(pwd):/opt" --workdir /opt registry.fedoraproject.org/fedora \
           sh -c \
           'dnf install -y python3-virt-firmware && \
           sh /opt/scripts/efivars.sh'
