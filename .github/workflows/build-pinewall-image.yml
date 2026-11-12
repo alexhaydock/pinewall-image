@@ -1,0 +1,70 @@
+---
+name: build-pinewall-image
+
+on:
+  # Allow manual triggers
+  workflow_dispatch:
+  # Run only on pushes that change the site's content
+  push:
+
+permissions:
+  contents: write
+
+jobs:
+  build_image:
+    name: Build Pinewall image
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Configure build name
+        run: |
+          echo "DATE=$(date +%Y%m%d-%H%M)" >> "$GITHUB_ENV"
+          echo "BUILDNAME=pinewall-${DATE}" >> "$GITHUB_ENV"
+
+      - name: Fetch sops
+        run: |
+          VERSION=$(curl -s https://api.github.com/repos/getsops/sops/releases/latest \
+            | jq -r .tag_name)
+          curl -sL "https://github.com/getsops/sops/releases/download/${VERSION}/sops-${VERSION}.linux.amd64" -o sops
+          sudo mv -v sops /usr/local/bin/sops
+          sudo chmod +x /usr/local/bin/sops
+
+      - name: Decrypt Secure Boot signing keys with sops
+        working-directory: keys
+        run: |
+          sops -d db-priv.pem.age > db-priv.pem
+          sops -d pk-priv.key.age > pk-priv.key
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}  # Import age key so we can sign the package
+
+      - name: Build initramfs
+        run: |
+          podman run --privileged --rm -it -v "$(pwd):/opt" --workdir /opt cgr.dev/chainguard/wolfi-base \
+          sh -c \
+          'apk --no-cache add apko cpio systemd-ukify zstd && \
+          sh /opt/scripts/initramfs.sh'
+
+      - name: Build UKI
+        run: |
+          podman run --privileged --rm -it -v "$(pwd):/opt" --workdir /opt docker.io/library/alpine \
+          sh -c \
+          'apk --no-cache add apko sbsigntool ukify && \
+          sh /opt/scripts/uki.sh'
+
+      - name: Build blank vars store
+        run: |
+          podman run --rm -it -v "$(pwd):/opt" --workdir /opt registry.fedoraproject.org/fedora \
+          sh -c \
+          'dnf install -y python3-virt-firmware && \
+          sh /opt/scripts/efivars.sh'
+
+      - name: Push image as a GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ env.DATE }}
+          name: Pinewall ${{ env.DATE }}
+          files:
+            - output/${BUILDNAME}_uki.efi
+            - output/${BUILDNAME}_vars.json
