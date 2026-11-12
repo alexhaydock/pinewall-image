@@ -62,8 +62,8 @@ jobs:
       - name: Push image as a GitHub Release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: ${{ env.DATE }}
-          name: Pinewall ${{ env.DATE }}
+          tag_name: ${{ env.BUILDNAME }}
+          name: Release ${{ env.BUILDNAME }}
           files: |
             output/${env.BUILDNAME}_uki.efi
             output/${env.BUILDNAME}_vars.json
