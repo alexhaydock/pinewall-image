@@ -64,4 +64,6 @@ jobs:
         with:
           tag_name: ${{ env.BUILDNAME }}
           name: Release ${{ env.BUILDNAME }}
-          files: output/*
+          files: |
+            output/pinewall-*_uki.efi
+            output/pinewall-*_vars.json
