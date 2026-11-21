@@ -6,6 +6,9 @@ on:
   workflow_dispatch:
   # Run only on pushes that change the site's content
   push:
+  # Run every Saturday at 05:55
+  schedule:
+    - cron: '55 5 * * 6'
 
 permissions:
   contents: write
